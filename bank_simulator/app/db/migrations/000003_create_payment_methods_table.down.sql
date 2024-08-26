@@ -1,0 +1,1 @@
+DELETE TABLE payment_methods;

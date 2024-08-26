@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+
+  api_postgres:
+    image: postgres:13
+    container_name: api-postgres
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    env_file:
+      - ./api/.env
+    ports:
+      - target: ${DB_PORT:-5432}
+        published: ${DB_PORT:-5432}
+        protocol: tcp
+        mode: host
+
+  bank_postgres:
+    image: postgres:13
+    container_name: bank-postgres
+    environment:
+      POSTGRES_USER: ${DB_USER_BANK}
+      POSTGRES_PASSWORD: ${DB_PASSWORD_BANK}
+    env_file:
+      - ./bank_simulator/.env
+    ports:
+      - "${DB_PORT_BANK:-5433}:5432"
+
+volumes:
+  postgres_data:

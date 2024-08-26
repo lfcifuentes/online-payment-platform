@@ -1,0 +1,440 @@
+basePath: /
+consumes:
+- application/json
+definitions:
+  gin.H:
+    additionalProperties: {}
+    type: object
+  models.PaymentMethod:
+    properties:
+      bank_code:
+        type: integer
+      bank_id:
+        type: integer
+      brand:
+        type: string
+      created_at:
+        type: string
+      exp_month:
+        type: integer
+      exp_year:
+        type: integer
+      id:
+        type: integer
+      last_4:
+        type: integer
+      name:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  valueobjects.LoginParams:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  valueobjects.NewPaymentMethodRequest:
+    properties:
+      brand:
+        type: string
+      card_number:
+        type: string
+      exp_month:
+        type: integer
+      exp_year:
+        type: integer
+      name:
+        type: string
+    required:
+    - brand
+    - card_number
+    - exp_month
+    - exp_year
+    - name
+    type: object
+  valueobjects.PayParams:
+    properties:
+      amount:
+        type: number
+      merchant_id:
+        type: integer
+      merchant_payment_method_id:
+        type: integer
+      payment_method_id:
+        type: integer
+    required:
+    - amount
+    - merchant_id
+    - merchant_payment_method_id
+    - payment_method_id
+    type: object
+  valueobjects.RegisterParams:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - name
+    - password
+    type: object
+info:
+  contact:
+    email: lfcifuentes28@gmail.com
+    name: Luis Cifuentes
+    url: https://lfcifuentes.netlify.app
+  description: This is a simple Bank Simulator API documentation.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Transaction API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Loguear un usuario usado nuestra base de datos
+      parameters:
+      - description: User Credentials
+        in: body
+        name: userCredentials
+        required: true
+        schema:
+          $ref: '#/definitions/valueobjects.LoginParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Loguear un usuario usado nuestra base de datos
+      tags:
+      - Auth
+  /auth/logout:
+    post:
+      consumes:
+      - application/json
+      description: Desloguear un usuario usado nuestra base de datos
+      parameters:
+      - description: Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Desloguear un usuario usado nuestra base de datos
+      tags:
+      - Auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Registrar un usuario en nuestra base de datos
+      parameters:
+      - description: User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/valueobjects.RegisterParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Registrar un usuario en nuestra base de datos
+      tags:
+      - Auth
+  /payment-methods:
+    get:
+      consumes:
+      - application/json
+      description: List payment methods
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.PaymentMethod'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      security:
+      - Bearer: []
+      summary: List payment methods
+      tags:
+      - Payment Methods
+    post:
+      consumes:
+      - application/json
+      description: Create a payment method
+      parameters:
+      - description: Payment Method
+        in: body
+        name: paymentMethod
+        required: true
+        schema:
+          $ref: '#/definitions/valueobjects.NewPaymentMethodRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - Bearer: []
+      summary: Create a payment method
+      tags:
+      - Payment Methods
+  /payment-methods/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a payment method
+      parameters:
+      - description: Payment Method ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - Bearer: []
+      summary: Delete a payment method
+      tags:
+      - Payment Methods
+  /payments/pay:
+    post:
+      consumes:
+      - application/json
+      description: Pagar un producto
+      parameters:
+      - description: Payment
+        in: body
+        name: payment
+        required: true
+        schema:
+          $ref: '#/definitions/valueobjects.PayParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/gin.H'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Pagar un producto
+      tags:
+      - Payments
+produces:
+- application/json
+swagger: "2.0"

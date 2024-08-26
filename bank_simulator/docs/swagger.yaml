@@ -1,0 +1,210 @@
+basePath: /
+consumes:
+- application/json
+definitions:
+  gin.H:
+    additionalProperties: {}
+    type: object
+  models.Payment:
+    properties:
+      amount:
+        type: number
+      bank_id:
+        type: integer
+      created_at:
+        type: string
+      id:
+        type: integer
+      payment_method_id:
+        type: integer
+      receiver_id:
+        type: integer
+      status:
+        type: string
+      updated_at:
+        type: string
+    required:
+    - amount
+    - bank_id
+    - payment_method_id
+    - receiver_id
+    type: object
+  models.PaymentMethod:
+    properties:
+      bank_id:
+        type: integer
+      brand:
+        type: string
+      card_number:
+        type: string
+      created_at:
+        type: string
+      exp_month:
+        type: integer
+      exp_year:
+        type: integer
+      id:
+        type: integer
+      last4:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  valueobjects.CreateClientRequest:
+    properties:
+      bank_id:
+        type: integer
+      email:
+        type: string
+      name:
+        type: string
+    required:
+    - bank_id
+    - email
+    - name
+    type: object
+  valueobjects.PayParams:
+    properties:
+      amount:
+        type: number
+      bank_id:
+        type: integer
+      payment_method_id:
+        type: integer
+      receiver_id:
+        type: integer
+    required:
+    - amount
+    - bank_id
+    - payment_method_id
+    - receiver_id
+    type: object
+info:
+  contact:
+    email: lfcifuentes28@gmail.com
+    name: Luis Cifuentes
+    url: https://lfcifuentes.netlify.app
+  description: This is a simple Bank Simulator API documentation.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Bank Simulator API
+  version: "1.0"
+paths:
+  /pay:
+    post:
+      consumes:
+      - application/json
+      description: Pay
+      parameters:
+      - description: Pay
+        in: body
+        name: pay
+        required: true
+        schema:
+          $ref: '#/definitions/valueobjects.PayParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Payment'
+      summary: Pay
+      tags:
+      - Payments
+  /payment-methods/{user_code}:
+    get:
+      consumes:
+      - application/json
+      description: List payment methods
+      parameters:
+      - description: User code
+        in: path
+        name: user_code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.PaymentMethod'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: List payment methods
+      tags:
+      - Payment Methods
+    post:
+      consumes:
+      - application/json
+      description: Create payment method
+      parameters:
+      - description: User code
+        in: path
+        name: user_code
+        required: true
+        type: string
+      - description: Payment Method
+        in: body
+        name: payment_method
+        required: true
+        schema:
+          $ref: '#/definitions/models.PaymentMethod'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.PaymentMethod'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create payment method
+      tags:
+      - Payment Methods
+  /payment-methods/{user_code}/{payment_method_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete payment method
+      parameters:
+      - description: User code
+        in: path
+        name: user_code
+        required: true
+        type: string
+      - description: Payment Method ID
+        in: path
+        name: payment_method_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete payment method
+      tags:
+      - Payment Methods
+produces:
+- application/json
+swagger: "2.0"
