@@ -1,5 +1,14 @@
 # Api
 
+# Run project
+```go
+go run main.go server
+```
+# Run seeders
+```go
+go run main.go seeders
+```
+
 # Makefile
 Here is a list of the available commands in the Makefile and their description:
 

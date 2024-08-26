@@ -57,5 +57,5 @@ make docker_up
 
 Stops and removes the Docker containers.
 ```sh
-make docker_down:
+make docker_down
 ```

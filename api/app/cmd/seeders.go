@@ -17,7 +17,7 @@ import (
 // It establishes a connection to the database and pings it to ensure connectivity.
 // After that, it calls the createUser function to create the user and then calls the createBanks function.
 var createUserCmd = &cobra.Command{
-	Use:   "create-user",
+	Use:   "seeders",
 	Short: "Create a new user in the database",
 	Long:  `This command allows you to create a new user in the database.`,
 	Run: func(cmd *cobra.Command, args []string) {
