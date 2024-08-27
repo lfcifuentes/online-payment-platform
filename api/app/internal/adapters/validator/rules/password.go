@@ -24,11 +24,7 @@ func CustomPasswordValidator(fl validator.FieldLevel) bool {
 
 	// Check if it has at least one special character
 	hasSpecialChar := regexp.MustCompile(`[^a-zA-Z0-9]`).MatchString(val)
-	if !hasSpecialChar {
-		return false
-	}
-
-	return true
+	return hasSpecialChar
 }
 
 // CustomPasswordConfirmationValidator checks if the password confirmation matches the password

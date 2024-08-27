@@ -41,7 +41,7 @@ func (db *DBAdapter) Ping() error {
 func (db *DBAdapter) Close() error {
 	if db.DB != nil {
 		if err := db.DB.Close(); err != nil {
-			return errors.New("Error al desconectar de PsqlServer")
+			return errors.New("error al desconectar de PsqlServer")
 		}
 	}
 	return nil
